@@ -236,6 +236,230 @@
     letter-spacing: 0.1em;
   }
 
+  .pin-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px dashed var(--line);
+    color: var(--ink-soft);
+    padding: 12px;
+    border-radius: 12px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .pin-btn:active {
+    background: var(--paper-deep);
+    border-color: var(--accent);
+  }
+
+  .pin-icon {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    color: var(--accent);
+  }
+
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .toggle-row:last-child { border-bottom: none; }
+
+  .toggle-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+
+  .toggle-label-main {
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .toggle-label-sub {
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+  }
+
+  .toggle {
+    position: relative;
+    width: 44px;
+    height: 26px;
+    background: var(--line);
+    border-radius: 13px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .toggle.on { background: var(--green); }
+
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: var(--paper);
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .toggle.on::after { transform: translateX(18px); }
+
+  .time-input {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    margin-left: 12px;
+    width: 100px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .reminder-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    gap: 8px;
+  }
+
+  .reminder-row:last-child { border-bottom: none; }
+
+  .reminder-row .toggle { flex-shrink: 0; }
+
+  .reminder-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .version-tag {
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin: 24px 0 8px;
+  }
+
+  .update-pill {
+    background: var(--accent);
+    color: var(--paper);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0;
+    cursor: pointer;
+    border: none;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+  }
+
+  .last-call-cost {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(74, 107, 58, 0.08);
+    border-left: 3px solid var(--green);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .last-call-cost strong {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .usage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .usage-stat {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+
+  .usage-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .usage-value {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  .usage-sub {
+    font-size: 10px;
+    color: var(--ink-faint);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .usage-detail {
+    font-size: 12px;
+    color: var(--ink-soft);
+    background: var(--paper);
+    padding: 10px 14px;
+    border-radius: 8px;
+    line-height: 1.5;
+    border: 1px solid var(--line);
+  }
+
+  details summary {
+    list-style: none;
+  }
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  details summary::before {
+    content: '+';
+    margin-right: 6px;
+    color: var(--accent);
+  }
+  details[open] summary::before {
+    content: '−';
+  }
+
   /* Actions */
   .actions {
     display: grid;
@@ -793,6 +1017,11 @@
       <div class="goal-bar-text" id="goalText">Set a daily target in your profile</div>
     </div>
 
+    <button class="pin-btn" onclick="pinTotalsToLockScreen()" id="pinBtn">
+      <span class="pin-icon">◐</span>
+      <span>Pin today's totals to lock screen</span>
+    </button>
+
     <div class="actions">
       <button class="action-btn" onclick="openModal('meal')">
         <span class="icon">f</span>
@@ -947,6 +1176,76 @@
       <div id="apiStatus" style="margin-top: 12px; font-size: 12px; color: var(--ink-faint);"></div>
     </div>
 
+    <div class="profile-card">
+      <h3>API usage &amp; cost</h3>
+      <p style="color: var(--ink-soft); font-size: 13px; margin-bottom: 16px; line-height: 1.5;">
+        Tracks what you've spent on AI calorie lookups. Calculated from token counts Anthropic returns with each call.
+      </p>
+
+      <div id="apiUsageStats"></div>
+
+      <details style="margin-top: 16px;">
+        <summary style="font-size: 12px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;">Pricing rates (per million tokens)</summary>
+        <div class="field-row" style="margin-top: 12px;">
+          <div class="field">
+            <label class="field-label">Input</label>
+            <input class="field-input" id="priceInput" type="number" step="0.01" placeholder="1.00" />
+          </div>
+          <div class="field">
+            <label class="field-label">Output</label>
+            <input class="field-input" id="priceOutput" type="number" step="0.01" placeholder="5.00" />
+          </div>
+        </div>
+        <div style="font-size: 11px; color: var(--ink-faint); margin-bottom: 12px; line-height: 1.4;">
+          Default: $1 / $5 per million tokens for Claude Haiku 4.5. Update if Anthropic changes rates.
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="resetApiUsage()">Reset stats</button>
+          <button class="btn btn-primary" onclick="updatePricing()">Update rates</button>
+        </div>
+      </details>
+    </div>
+
+    <div class="profile-card">
+      <h3>Notifications</h3>
+      <p style="color: var(--ink-soft); font-size: 13px; margin-bottom: 16px; line-height: 1.5;">
+        Get reminders to log meals and a daily wrap-up. <strong>Requires installing the app to your Home Screen first</strong> — iOS Safari won't allow notifications otherwise.
+      </p>
+
+      <div class="toggle-row">
+        <div class="toggle-label">
+          <div class="toggle-label-main">Enable notifications</div>
+          <div class="toggle-label-sub" id="notifPermStatus">Tap to request permission</div>
+        </div>
+        <div class="toggle" id="notifMasterToggle" onclick="toggleNotifications()"></div>
+      </div>
+
+      <div id="reminderControls" style="display:none; margin-top: 8px;">
+        <div class="reminder-row">
+          <div class="toggle" id="t-breakfast" onclick="toggleReminder('breakfast')"></div>
+          <div class="reminder-name">Breakfast</div>
+          <input type="time" class="time-input" id="time-breakfast" onchange="updateReminderTime('breakfast', this.value)" />
+        </div>
+        <div class="reminder-row">
+          <div class="toggle" id="t-lunch" onclick="toggleReminder('lunch')"></div>
+          <div class="reminder-name">Lunch</div>
+          <input type="time" class="time-input" id="time-lunch" onchange="updateReminderTime('lunch', this.value)" />
+        </div>
+        <div class="reminder-row">
+          <div class="toggle" id="t-dinner" onclick="toggleReminder('dinner')"></div>
+          <div class="reminder-name">Dinner</div>
+          <input type="time" class="time-input" id="time-dinner" onchange="updateReminderTime('dinner', this.value)" />
+        </div>
+        <div class="reminder-row">
+          <div class="toggle" id="t-wrapup" onclick="toggleReminder('wrapup')"></div>
+          <div class="reminder-name">Daily wrap-up</div>
+          <input type="time" class="time-input" id="time-wrapup" onchange="updateReminderTime('wrapup', this.value)" />
+        </div>
+
+        <button class="btn btn-secondary" style="width:100%; margin-top: 14px;" onclick="testNotification()">Send test notification</button>
+      </div>
+    </div>
+
     <div class="section">
       <div class="section-title"><span>How to get a key</span></div>
 
@@ -1003,6 +1302,10 @@
         4. Tap <strong>Add</strong>. The app icon will appear on your home screen and open full-screen like a native app.
       </p>
     </div>
+
+    <div class="version-tag">
+      Ledger v<span id="versionLabel"></span> · <a href="#" onclick="checkForUpdate(true); return false;" style="color: var(--accent); text-decoration: none;">Check for updates</a>
+    </div>
   </div>
 
 </div>
@@ -1035,6 +1338,8 @@
       <span id="aiBtnText">Estimate with AI</span>
     </button>
 
+    <div id="lastCallCost" class="last-call-cost" style="display:none"></div>
+
     <div class="field" style="margin-top: 16px;">
       <label class="field-label" id="calLabel">Calories</label>
       <input class="field-input" id="entryCal" type="number" inputmode="numeric" placeholder="e.g. 450" />
@@ -1054,6 +1359,11 @@
 
 <script>
 // ============================================================
+// APP VERSION
+// ============================================================
+const APP_VERSION = '1.2.0';
+
+// ============================================================
 // STORAGE
 // ============================================================
 const DB_KEY = 'ledger_data_v1';
@@ -1062,7 +1372,11 @@ function loadDB() {
   try {
     const raw = localStorage.getItem(DB_KEY);
     if (!raw) return defaultDB();
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    // Migrate: ensure new blocks exist for older saves
+    if (!parsed.notifications) parsed.notifications = defaultDB().notifications;
+    if (!parsed.apiUsage) parsed.apiUsage = defaultDB().apiUsage;
+    return parsed;
   } catch (e) { return defaultDB(); }
 }
 
@@ -1071,7 +1385,23 @@ function defaultDB() {
     days: {},          // 'YYYY-MM-DD' -> { meals: [], workouts: [], closed: false }
     profile: {},
     apiKey: '',
-    lastOpenDate: todayStr()
+    lastOpenDate: todayStr(),
+    notifications: {
+      enabled: false,
+      breakfast: { enabled: false, time: '09:00' },
+      lunch:     { enabled: false, time: '12:30' },
+      dinner:    { enabled: false, time: '19:00' },
+      wrapup:    { enabled: false, time: '21:00' },
+      lastScheduled: null
+    },
+    apiUsage: {
+      // Per-day map: 'YYYY-MM-DD' -> { calls, inputTokens, outputTokens, cost }
+      byDay: {},
+      // Lifetime totals
+      total: { calls: 0, inputTokens: 0, outputTokens: 0, cost: 0 },
+      // Pricing in USD per million tokens (editable in Setup if rates change)
+      pricing: { inputPerMillion: 1.00, outputPerMillion: 5.00 }
+    }
   };
 }
 
@@ -1226,6 +1556,7 @@ function openModal(mode) {
   document.getElementById('entryDesc').value = '';
   document.getElementById('entryCal').value = '';
   document.getElementById('entryDuration').value = '';
+  document.getElementById('lastCallCost').style.display = 'none';
 
   if (mode === 'meal') {
     document.getElementById('modalTitle').textContent = 'Log a meal';
@@ -1341,7 +1672,17 @@ async function estimateWithAI() {
     const cal = parseInt(match[0], 10);
     document.getElementById('entryCal').value = cal;
     lastAiUsed = true;
-    toast(`Estimated ${cal} kcal`);
+
+    // Record API cost
+    const usage = data.usage || {};
+    const inputTokens = usage.input_tokens || 0;
+    const outputTokens = usage.output_tokens || 0;
+    const cost = recordApiUsage(inputTokens, outputTokens);
+
+    // Show the cost inline
+    showLastCallCost(inputTokens, outputTokens, cost);
+
+    toast(`Estimated ${cal} kcal · ${formatCost(cost)}`);
   } catch (e) {
     toast('AI estimate failed: ' + (e.message || 'unknown error'));
     console.error(e);
@@ -1349,6 +1690,138 @@ async function estimateWithAI() {
     btn.disabled = false;
     btnText.textContent = 'Estimate with AI';
   }
+}
+
+// ============================================================
+// API USAGE / COST TRACKING
+// ============================================================
+function recordApiUsage(inputTokens, outputTokens) {
+  const u = db.apiUsage;
+  const p = u.pricing;
+  const cost = (inputTokens * p.inputPerMillion + outputTokens * p.outputPerMillion) / 1_000_000;
+
+  const today = todayStr();
+  if (!u.byDay[today]) u.byDay[today] = { calls: 0, inputTokens: 0, outputTokens: 0, cost: 0 };
+  u.byDay[today].calls += 1;
+  u.byDay[today].inputTokens += inputTokens;
+  u.byDay[today].outputTokens += outputTokens;
+  u.byDay[today].cost += cost;
+
+  u.total.calls += 1;
+  u.total.inputTokens += inputTokens;
+  u.total.outputTokens += outputTokens;
+  u.total.cost += cost;
+
+  saveDB();
+  return cost;
+}
+
+function formatCost(cost) {
+  if (cost < 0.01) {
+    // Show as fractional cent for very small amounts
+    return `$${cost.toFixed(5)}`;
+  }
+  return `$${cost.toFixed(4)}`;
+}
+
+function formatCostShort(cost) {
+  if (cost < 0.01) return `<$0.01`;
+  if (cost < 1) return `$${cost.toFixed(3)}`;
+  return `$${cost.toFixed(2)}`;
+}
+
+function showLastCallCost(inputTokens, outputTokens, cost) {
+  const el = document.getElementById('lastCallCost');
+  if (!el) return;
+  el.innerHTML = `Last call: <strong>${formatCost(cost)}</strong> · ${inputTokens} in / ${outputTokens} out tokens`;
+  el.style.display = 'block';
+}
+
+function getApiUsageTodayAndMonth() {
+  const u = db.apiUsage;
+  const today = todayStr();
+  const todayData = u.byDay[today] || { calls: 0, inputTokens: 0, outputTokens: 0, cost: 0 };
+
+  const now = new Date();
+  const ym = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  let monthCalls = 0, monthCost = 0;
+  Object.keys(u.byDay).forEach(date => {
+    if (date.startsWith(ym)) {
+      monthCalls += u.byDay[date].calls;
+      monthCost += u.byDay[date].cost;
+    }
+  });
+
+  return {
+    today: todayData,
+    month: { calls: monthCalls, cost: monthCost },
+    total: u.total,
+    pricing: u.pricing
+  };
+}
+
+function resetApiUsage() {
+  if (!confirm('Reset all API usage stats? This won\'t affect your actual Anthropic bill — it just zeroes out the counter shown here.')) return;
+  db.apiUsage.byDay = {};
+  db.apiUsage.total = { calls: 0, inputTokens: 0, outputTokens: 0, cost: 0 };
+  saveDB();
+  renderApiUsageUI();
+  toast('Usage stats reset');
+}
+
+function updatePricing() {
+  const inp = parseFloat(document.getElementById('priceInput').value);
+  const out = parseFloat(document.getElementById('priceOutput').value);
+  if (isNaN(inp) || isNaN(out) || inp < 0 || out < 0) {
+    toast('Enter valid prices');
+    return;
+  }
+  db.apiUsage.pricing.inputPerMillion = inp;
+  db.apiUsage.pricing.outputPerMillion = out;
+  saveDB();
+  toast('Pricing updated');
+  renderApiUsageUI();
+}
+
+function renderApiUsageUI() {
+  const stats = getApiUsageTodayAndMonth();
+  const el = document.getElementById('apiUsageStats');
+  if (!el) return;
+
+  const t = stats.today;
+  const m = stats.month;
+  const tot = stats.total;
+
+  el.innerHTML = `
+    <div class="usage-grid">
+      <div class="usage-stat">
+        <div class="usage-label">Today</div>
+        <div class="usage-value">${formatCostShort(t.cost)}</div>
+        <div class="usage-sub">${t.calls} ${t.calls === 1 ? 'call' : 'calls'}</div>
+      </div>
+      <div class="usage-stat">
+        <div class="usage-label">This month</div>
+        <div class="usage-value">${formatCostShort(m.cost)}</div>
+        <div class="usage-sub">${m.calls} ${m.calls === 1 ? 'call' : 'calls'}</div>
+      </div>
+      <div class="usage-stat">
+        <div class="usage-label">Lifetime</div>
+        <div class="usage-value">${formatCostShort(tot.cost)}</div>
+        <div class="usage-sub">${tot.calls} ${tot.calls === 1 ? 'call' : 'calls'}</div>
+      </div>
+    </div>
+    <div class="usage-detail">
+      ${tot.calls > 0
+        ? `Avg per call: <strong>${formatCost(tot.cost / tot.calls)}</strong> · ${Math.round(tot.inputTokens / Math.max(1, tot.calls))} in / ${Math.round(tot.outputTokens / Math.max(1, tot.calls))} out tokens`
+        : `No AI calls yet — try the Estimate button when logging a meal.`}
+    </div>
+  `;
+
+  // Pricing inputs
+  const pi = document.getElementById('priceInput');
+  const po = document.getElementById('priceOutput');
+  if (pi) pi.value = stats.pricing.inputPerMillion;
+  if (po) po.value = stats.pricing.outputPerMillion;
 }
 
 // ============================================================
@@ -1459,6 +1932,9 @@ function renderSetup() {
   document.getElementById('apiStatus').textContent = db.apiKey
     ? '✓ API key is saved and ready'
     : 'No key saved yet';
+  document.getElementById('versionLabel').textContent = APP_VERSION;
+  renderNotificationsUI();
+  renderApiUsageUI();
 }
 
 function saveApiKey() {
@@ -1569,8 +2045,356 @@ function dismissInstall() {
 }
 
 // ============================================================
-// INIT
+// NOTIFICATIONS — local scheduled reminders + pin totals
 // ============================================================
+const REMINDER_BODIES = {
+  breakfast: "Time for breakfast — open Ledger to log it.",
+  lunch:     "Lunch break! Tap to log what you're eating.",
+  dinner:    "Dinner reminder — don't forget to log it.",
+  wrapup:    "Daily wrap-up — check today's totals and close out the day."
+};
+
+const REMINDER_TITLES = {
+  breakfast: "🌅 Breakfast",
+  lunch:     "🥗 Lunch",
+  dinner:    "🍽️ Dinner",
+  wrapup:    "📓 Ledger wrap-up"
+};
+
+function isStandaloneApp() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+async function toggleNotifications() {
+  if (db.notifications.enabled) {
+    // Turn off
+    db.notifications.enabled = false;
+    saveDB();
+    clearAllScheduledReminders();
+    renderNotificationsUI();
+    toast('Notifications disabled');
+    return;
+  }
+
+  // Turn on — need to request permission
+  if (!('Notification' in window)) {
+    toast("This browser doesn't support notifications");
+    return;
+  }
+
+  if (!isStandaloneApp()) {
+    toast("Install the app to your Home Screen first (see instructions above)");
+    return;
+  }
+
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm === 'granted') {
+      db.notifications.enabled = true;
+      saveDB();
+      scheduleAllReminders();
+      renderNotificationsUI();
+      toast('Notifications enabled');
+    } else {
+      toast('Permission denied — enable in iOS Settings → Notifications → Ledger');
+      renderNotificationsUI();
+    }
+  } catch (e) {
+    toast('Could not enable: ' + e.message);
+  }
+}
+
+function toggleReminder(name) {
+  const r = db.notifications[name];
+  r.enabled = !r.enabled;
+  saveDB();
+  scheduleAllReminders();
+  renderNotificationsUI();
+}
+
+function updateReminderTime(name, value) {
+  if (!value) return;
+  db.notifications[name].time = value;
+  saveDB();
+  scheduleAllReminders();
+}
+
+function clearAllScheduledReminders() {
+  if (window._reminderTimers) {
+    window._reminderTimers.forEach(t => clearTimeout(t));
+  }
+  window._reminderTimers = [];
+}
+
+function scheduleAllReminders() {
+  clearAllScheduledReminders();
+  if (!db.notifications.enabled) return;
+
+  ['breakfast', 'lunch', 'dinner', 'wrapup'].forEach(name => {
+    const r = db.notifications[name];
+    if (!r.enabled) return;
+    scheduleReminder(name, r.time);
+  });
+
+  db.notifications.lastScheduled = Date.now();
+  saveDB();
+}
+
+function scheduleReminder(name, timeStr) {
+  // Compute ms until the next occurrence of HH:MM
+  const [h, m] = timeStr.split(':').map(Number);
+  const now = new Date();
+  const target = new Date();
+  target.setHours(h, m, 0, 0);
+  if (target <= now) target.setDate(target.getDate() + 1);
+  const delay = target - now;
+
+  const timer = setTimeout(() => {
+    fireReminder(name);
+    // Reschedule for next day
+    scheduleReminder(name, timeStr);
+  }, delay);
+
+  window._reminderTimers.push(timer);
+}
+
+function fireReminder(name) {
+  if (Notification.permission !== 'granted') return;
+
+  const day = todayDay();
+  const eaten = day.meals.reduce((s, m) => s + m.cal, 0);
+  const burned = day.workouts.reduce((s, w) => s + w.cal, 0);
+
+  let body = REMINDER_BODIES[name];
+  if (name === 'wrapup') {
+    body = `Today: ${eaten} eaten · ${burned} burned · ${eaten - burned} net. Tap to review.`;
+  }
+
+  try {
+    const n = new Notification(REMINDER_TITLES[name], {
+      body,
+      tag: 'ledger-' + name,
+      icon: getIconDataUrl(),
+      badge: getIconDataUrl()
+    });
+    n.onclick = () => {
+      window.focus();
+      n.close();
+    };
+  } catch (e) {
+    console.error('Notification failed', e);
+  }
+}
+
+async function testNotification() {
+  if (Notification.permission !== 'granted') {
+    toast('Enable notifications first');
+    return;
+  }
+  const day = todayDay();
+  const eaten = day.meals.reduce((s, m) => s + m.cal, 0);
+  const burned = day.workouts.reduce((s, w) => s + w.cal, 0);
+  try {
+    new Notification('📓 Ledger test', {
+      body: `Today: ${eaten} eaten · ${burned} burned · ${eaten - burned} net`,
+      icon: getIconDataUrl(),
+      badge: getIconDataUrl(),
+      tag: 'ledger-test'
+    });
+    toast('Test sent — check lock screen');
+  } catch (e) {
+    toast('Test failed: ' + e.message);
+  }
+}
+
+async function pinTotalsToLockScreen() {
+  if (!('Notification' in window)) {
+    toast("This browser doesn't support notifications");
+    return;
+  }
+  if (!isStandaloneApp()) {
+    toast("Install to Home Screen first to use this");
+    return;
+  }
+  if (Notification.permission !== 'granted') {
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') {
+      toast('Allow notifications in iOS Settings → Ledger');
+      return;
+    }
+  }
+
+  const day = todayDay();
+  const eaten = day.meals.reduce((s, m) => s + m.cal, 0);
+  const burned = day.workouts.reduce((s, w) => s + w.cal, 0);
+  const net = eaten - burned;
+  const goal = db.profile.calGoal || 0;
+  const goalLine = goal > 0 ? ` · Goal ${goal}` : '';
+
+  try {
+    const n = new Notification('📓 Ledger — today', {
+      body: `🍽 ${eaten} eaten · 🔥 ${burned} burned · Net ${net >= 0 ? '+' : ''}${net}${goalLine}`,
+      tag: 'ledger-pin',         // same tag replaces previous pin
+      renotify: true,
+      requireInteraction: true,  // tries to keep it persistent on lock screen
+      icon: getIconDataUrl(),
+      badge: getIconDataUrl(),
+      silent: true
+    });
+    n.onclick = () => { window.focus(); n.close(); };
+    toast('Pinned to lock screen');
+  } catch (e) {
+    toast('Could not pin: ' + e.message);
+  }
+}
+
+function getIconDataUrl() {
+  return 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjQwIiBmaWxsPSIjMWExNjEyIi8+PHRleHQgeD0iOTYiIHk9IjEzMCIgZm9udC1mYW1pbHk9Imdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMTIwIiBmaWxsPSIjZjVlZmU0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXN0eWxlPSJpdGFsaWMiPkw8L3RleHQ+PC9zdmc+';
+}
+
+function renderNotificationsUI() {
+  const n = db.notifications;
+  const master = document.getElementById('notifMasterToggle');
+  const ctrls = document.getElementById('reminderControls');
+  const status = document.getElementById('notifPermStatus');
+
+  master.classList.toggle('on', !!n.enabled);
+  ctrls.style.display = n.enabled ? 'block' : 'none';
+
+  if (!('Notification' in window)) {
+    status.textContent = 'Not supported in this browser';
+  } else if (!isStandaloneApp()) {
+    status.textContent = 'Install to Home Screen first';
+  } else if (Notification.permission === 'denied') {
+    status.textContent = 'Blocked — enable in iOS Settings → Ledger';
+  } else if (n.enabled) {
+    status.textContent = '✓ Reminders are active';
+  } else {
+    status.textContent = 'Tap to enable';
+  }
+
+  ['breakfast', 'lunch', 'dinner', 'wrapup'].forEach(name => {
+    document.getElementById('t-' + name).classList.toggle('on', !!n[name].enabled);
+    document.getElementById('time-' + name).value = n[name].time;
+  });
+}
+
+// ============================================================
+// AUTO-UPDATE — service worker + version check
+// ============================================================
+// A tiny inline service worker. We register it as a blob URL so this app
+// still works as a single self-contained file.
+const SW_SOURCE = `
+const CACHE = 'ledger-v${APP_VERSION}';
+self.addEventListener('install', e => { self.skipWaiting(); });
+self.addEventListener('activate', e => {
+  e.waitUntil((async () => {
+    // Drop any old caches from previous versions
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)));
+    await self.clients.claim();
+  })());
+});
+self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  // Never cache the API
+  if (url.hostname === 'api.anthropic.com') return;
+  // Network-first for the HTML so updates land immediately
+  if (e.request.mode === 'navigate' || (e.request.destination === 'document')) {
+    e.respondWith((async () => {
+      try {
+        const fresh = await fetch(e.request, { cache: 'no-store' });
+        const cache = await caches.open(CACHE);
+        cache.put(e.request, fresh.clone());
+        return fresh;
+      } catch (err) {
+        const cached = await caches.match(e.request);
+        return cached || new Response('Offline', { status: 503 });
+      }
+    })());
+    return;
+  }
+  // Cache-first for assets like fonts
+  e.respondWith((async () => {
+    const cached = await caches.match(e.request);
+    if (cached) return cached;
+    try {
+      const fresh = await fetch(e.request);
+      const cache = await caches.open(CACHE);
+      cache.put(e.request, fresh.clone());
+      return fresh;
+    } catch (err) {
+      return new Response('', { status: 504 });
+    }
+  })());
+});
+`;
+
+async function registerServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+  try {
+    const blob = new Blob([SW_SOURCE], { type: 'application/javascript' });
+    const swUrl = URL.createObjectURL(blob);
+    const reg = await navigator.serviceWorker.register(swUrl, { scope: './' });
+
+    // Check for new SW each time the app gains focus
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && reg) reg.update().catch(() => {});
+    });
+
+    // Listen for new SW taking over
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
+  } catch (e) {
+    console.log('SW registration failed', e);
+  }
+}
+
+async function checkForUpdate(manual) {
+  if (!('serviceWorker' in navigator)) {
+    if (manual) toast('Not supported here');
+    return;
+  }
+  try {
+    const reg = await navigator.serviceWorker.getRegistration();
+    if (reg) {
+      await reg.update();
+    }
+    // Also force-refetch the current HTML to compare
+    const res = await fetch(window.location.href, { cache: 'no-store' });
+    const text = await res.text();
+    const m = text.match(/const APP_VERSION\s*=\s*['"]([^'"]+)['"]/);
+    if (m && m[1] !== APP_VERSION) {
+      if (manual) {
+        if (confirm(`New version ${m[1]} available (you're on ${APP_VERSION}). Reload now?`)) {
+          window.location.reload();
+        }
+      } else {
+        showUpdateAvailable(m[1]);
+      }
+    } else if (manual) {
+      toast(`You're up to date (v${APP_VERSION})`);
+    }
+  } catch (e) {
+    if (manual) toast('Could not check: ' + e.message);
+  }
+}
+
+function showUpdateAvailable(newVersion) {
+  // Show a non-intrusive pill at the top of home page
+  const home = document.getElementById('page-home');
+  if (home.querySelector('.update-pill')) return;
+  const pill = document.createElement('button');
+  pill.className = 'update-pill';
+  pill.innerHTML = `↻ Update to v${newVersion}`;
+  pill.onclick = () => window.location.reload();
+  const stats = home.querySelector('.stats');
+  stats.parentNode.insertBefore(pill, stats);
+}
 function renderAll() {
   checkDayRollover();
   renderHome();
@@ -1591,6 +2415,10 @@ document.addEventListener('visibilitychange', () => {
 
 renderAll();
 showInstallBannerIfNeeded();
+registerServiceWorker();
+scheduleAllReminders();
+// Background update check
+setTimeout(() => checkForUpdate(false), 3000);
 </script>
 </body>
 </html>

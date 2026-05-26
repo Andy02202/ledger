@@ -236,6 +236,13 @@
     letter-spacing: 0.1em;
   }
 
+  .quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
   .pin-btn {
     width: 100%;
     background: transparent;
@@ -247,7 +254,6 @@
     font-size: 12px;
     letter-spacing: 0.05em;
     cursor: pointer;
-    margin-bottom: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -264,6 +270,154 @@
     font-family: 'Fraunces', serif;
     font-size: 14px;
     color: var(--accent);
+  }
+
+  /* Photo + text AI button row */
+  .ai-button-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .btn-ai.photo {
+    background: var(--ink);
+    width: auto;
+  }
+
+  /* Macros breakdown */
+  .macro-breakdown {
+    margin-top: 12px;
+    padding: 14px;
+    background: var(--paper-deep);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+
+  .macro-title {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .macro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .macro-item {
+    background: var(--paper);
+    border-radius: 8px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
+  .macro-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+
+  .macro-value {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .macro-value span {
+    font-size: 10px;
+    color: var(--ink-faint);
+    font-family: 'Inter Tight', sans-serif;
+    margin-left: 1px;
+  }
+
+  /* Weight chart */
+  .weight-chart {
+    margin: 4px -8px 14px;
+  }
+
+  .trend-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .trend-stat {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 6px;
+    text-align: center;
+  }
+
+  .trend-label {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .trend-value {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .trend-value.down { color: var(--green); }
+  .trend-value.up { color: var(--accent); }
+
+  .trend-unit {
+    font-size: 9px;
+    color: var(--ink-faint);
+    font-family: 'Inter Tight', sans-serif;
+  }
+
+  /* Weight history list inside modal */
+  .weight-history-title {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin: 8px 0 8px 4px;
+  }
+
+  .weight-history-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: var(--paper-deep);
+    border-radius: 8px;
+    margin-bottom: 4px;
+  }
+
+  .weight-date {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    flex: 1;
+  }
+
+  .weight-val {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    color: var(--accent);
+  }
+
+  .weight-unit {
+    font-size: 10px;
+    color: var(--ink-faint);
+    font-family: 'Inter Tight', sans-serif;
   }
 
   .toggle-row {
@@ -1203,10 +1357,16 @@
       <div class="goal-bar-text" id="goalText">Set a daily target in your profile</div>
     </div>
 
-    <button class="pin-btn" onclick="pinTotalsToLockScreen()" id="pinBtn">
-      <span class="pin-icon">◐</span>
-      <span>Pin today's totals to lock screen</span>
-    </button>
+    <div class="quick-actions">
+      <button class="pin-btn" onclick="openWeightModal()">
+        <span class="pin-icon">⚖</span>
+        <span>Log weight</span>
+      </button>
+      <button class="pin-btn" onclick="pinTotalsToLockScreen()" id="pinBtn">
+        <span class="pin-icon">◐</span>
+        <span>Pin to lock screen</span>
+      </button>
+    </div>
 
     <div class="actions">
       <button class="action-btn" onclick="openModal('meal')">
@@ -1245,6 +1405,12 @@
         <div class="brand-name">History</div>
         <div class="brand-tag">Past Days</div>
       </div>
+    </div>
+
+    <div class="history-summary">
+      <h3>Weight trend</h3>
+      <div id="weightChart" class="weight-chart"></div>
+      <div id="weightTrendStats" class="trend-stats-grid"></div>
     </div>
 
     <div class="history-summary">
@@ -1621,14 +1787,20 @@
     </div>
 
     <div class="ai-help" id="aiHelp">
-      <strong>Tip:</strong> If you don't know the calories, describe it in detail and tap <strong>Estimate with AI</strong> below.
+      <strong>Tip:</strong> Don't know the calories? Describe it and tap <strong>Estimate</strong>, or snap a <strong>photo</strong> of your meal.
     </div>
 
-    <button class="btn btn-ai" id="aiBtn" onclick="estimateWithAI()">
-      <span id="aiBtnText">Estimate with AI</span>
-    </button>
+    <div class="ai-button-row">
+      <button class="btn btn-ai" id="aiBtn" onclick="estimateWithAI()">
+        <span id="aiBtnText">Estimate from text</span>
+      </button>
+      <button class="btn btn-ai photo" id="photoBtn" onclick="document.getElementById('photoInput').click()">
+        <span id="photoBtnText">📷 From photo</span>
+      </button>
+    </div>
 
     <div id="lastCallCost" class="last-call-cost" style="display:none"></div>
+    <div id="macroBreakdown" class="macro-breakdown" style="display:none"></div>
 
     <div class="field" style="margin-top: 16px;">
       <label class="field-label" id="calLabel">Calories</label>
@@ -1647,11 +1819,40 @@
   </div>
 </div>
 
+<!-- Weight modal -->
+<div class="modal" id="weightModal">
+  <div class="modal-content">
+    <div class="modal-grip"></div>
+    <div class="modal-title">Log weight</div>
+    <div class="modal-subtitle">Morning weigh-in is most consistent</div>
+
+    <div class="field">
+      <label class="field-label" id="weightModalLabel">Weight (lbs)</label>
+      <input class="field-input" id="weightInput" type="number" step="0.1" inputmode="decimal" placeholder="e.g. 178.5" />
+    </div>
+
+    <div class="field">
+      <label class="field-label">Date</label>
+      <input class="field-input" id="weightDate" type="date" />
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="closeWeightModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveWeight()">Save</button>
+    </div>
+
+    <div id="weightHistoryList" style="margin-top: 20px;"></div>
+  </div>
+</div>
+
+<!-- Hidden photo input for meal photos -->
+<input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none" onchange="onPhotoSelected(event)" />
+
 <script>
 // ============================================================
 // APP VERSION
 // ============================================================
-const APP_VERSION = '1.3.0';
+const APP_VERSION = '1.5.0';
 
 // ============================================================
 // STORAGE
@@ -1666,6 +1867,7 @@ function loadDB() {
     // Migrate: ensure new blocks exist for older saves
     if (!parsed.notifications) parsed.notifications = defaultDB().notifications;
     if (!parsed.apiUsage) parsed.apiUsage = defaultDB().apiUsage;
+    if (!parsed.weights) parsed.weights = [];
     return parsed;
   } catch (e) { return defaultDB(); }
 }
@@ -1676,6 +1878,7 @@ function defaultDB() {
     profile: {},
     apiKey: '',
     lastOpenDate: todayStr(),
+    weights: [],       // [{ date: 'YYYY-MM-DD', weight: number, units: 'imperial'|'metric' }]
     notifications: {
       enabled: false,
       breakfast: { enabled: false, time: '09:00' },
@@ -1847,6 +2050,8 @@ function openModal(mode) {
   document.getElementById('entryCal').value = '';
   document.getElementById('entryDuration').value = '';
   document.getElementById('lastCallCost').style.display = 'none';
+  document.getElementById('macroBreakdown').style.display = 'none';
+  lastMacros = null;
 
   if (mode === 'meal') {
     document.getElementById('modalTitle').textContent = 'Log a meal';
@@ -1855,6 +2060,8 @@ function openModal(mode) {
     document.getElementById('entryDesc').placeholder = "Be specific — e.g. 'two slices of cheese pizza and a coke'";
     document.getElementById('calLabel').textContent = 'Calories consumed';
     document.getElementById('durationField').style.display = 'none';
+    document.getElementById('photoBtn').style.display = 'flex';
+    document.getElementById('aiBtnText').textContent = 'Estimate from text';
   } else {
     document.getElementById('modalTitle').textContent = 'Log a workout';
     document.getElementById('modalSubtitle').textContent = 'Activity';
@@ -1862,6 +2069,8 @@ function openModal(mode) {
     document.getElementById('entryDesc').placeholder = "Be specific — e.g. '30 min jog at moderate pace' or 'weightlifting upper body'";
     document.getElementById('calLabel').textContent = 'Calories burned';
     document.getElementById('durationField').style.display = 'block';
+    document.getElementById('photoBtn').style.display = 'none';
+    document.getElementById('aiBtnText').textContent = 'Estimate with AI';
   }
 
   document.getElementById('modal').classList.add('open');
@@ -1883,8 +2092,13 @@ function saveEntry() {
     name,
     cal,
     time: Date.now(),
-    aiUsed: lastAiUsed
+    aiUsed: lastAiUsed,
+    fromPhoto: lastFromPhoto
   };
+
+  if (lastMacros) {
+    entry.macros = lastMacros;
+  }
 
   if (modalMode === 'workout') {
     const dur = parseInt(document.getElementById('entryDuration').value, 10);
@@ -1895,6 +2109,8 @@ function saveEntry() {
   }
 
   lastAiUsed = false;
+  lastFromPhoto = false;
+  lastMacros = null;
   saveDB();
   closeModal();
   renderHome();
@@ -1913,6 +2129,8 @@ function deleteEntry(type, idx) {
 // AI ESTIMATE (calls Anthropic API)
 // ============================================================
 let lastAiUsed = false;
+let lastFromPhoto = false;
+let lastMacros = null;
 
 async function estimateWithAI() {
   const desc = document.getElementById('entryDesc').value.trim();
@@ -1992,8 +2210,446 @@ async function estimateWithAI() {
     console.error(e);
   } finally {
     btn.disabled = false;
-    btnText.textContent = 'Estimate with AI';
+    btnText.textContent = modalMode === 'meal' ? 'Estimate from text' : 'Estimate with AI';
   }
+}
+
+// ============================================================
+// PHOTO LOGGING (vision-based meal calorie estimation)
+// ============================================================
+async function onPhotoSelected(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (!db.apiKey) {
+    toast('Add your API key in Setup first');
+    switchPage('setup');
+    closeModal();
+    return;
+  }
+
+  const photoBtn = document.getElementById('photoBtn');
+  const photoBtnText = document.getElementById('photoBtnText');
+  photoBtn.disabled = true;
+  photoBtnText.innerHTML = '<span class="spinner"></span> Analyzing...';
+
+  try {
+    // Read file as base64 and downscale to keep token cost reasonable
+    const base64 = await downscaleAndEncodeImage(file);
+    const mediaType = 'image/jpeg';
+
+    const prompt = `Look at this photo of a meal and estimate the nutrition. Be realistic about portion sizes visible in the image. Respond with ONLY a JSON object (no markdown, no code blocks, no explanation) in this exact format:
+
+{"name": "short description of the food", "calories": 450, "protein": 25, "carbs": 50, "fat": 18}
+
+All four numeric values are integers in grams (except calories in kcal). Name should be 3-8 words.`;
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': db.apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 200,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64 } },
+            { type: 'text', text: prompt }
+          ]
+        }]
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error?.message || `HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    const text = data.content?.[0]?.text || '';
+
+    // Strip code fences if Claude added them despite instructions
+    const cleaned = text.replace(/```json|```/g, '').trim();
+    let parsed;
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch (e) {
+      // Try to extract JSON from inside any wrapping text
+      const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+      if (jsonMatch) parsed = JSON.parse(jsonMatch[0]);
+      else throw new Error('Could not parse response');
+    }
+
+    if (!parsed.name || typeof parsed.calories !== 'number') {
+      throw new Error('Incomplete response');
+    }
+
+    // Fill in the form
+    document.getElementById('entryDesc').value = parsed.name;
+    document.getElementById('entryCal').value = Math.round(parsed.calories);
+
+    // Store macros for save
+    lastMacros = {
+      protein: Math.round(parsed.protein || 0),
+      carbs: Math.round(parsed.carbs || 0),
+      fat: Math.round(parsed.fat || 0)
+    };
+    lastAiUsed = true;
+    lastFromPhoto = true;
+
+    // Show macro breakdown
+    showMacroBreakdown(parsed.calories, lastMacros);
+
+    // Record cost
+    const usage = data.usage || {};
+    const cost = recordApiUsage(usage.input_tokens || 0, usage.output_tokens || 0);
+    showLastCallCost(usage.input_tokens || 0, usage.output_tokens || 0, cost);
+
+    toast(`Identified · ${formatCost(cost)}`);
+  } catch (e) {
+    toast('Photo analysis failed: ' + (e.message || 'unknown error'));
+    console.error(e);
+  } finally {
+    photoBtn.disabled = false;
+    photoBtnText.textContent = '📷 From photo';
+    // Reset input so re-selecting same file triggers change
+    event.target.value = '';
+  }
+}
+
+function downscaleAndEncodeImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        // Downscale longest edge to 1024px to control token cost
+        const maxDim = 1024;
+        let w = img.width, h = img.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) { h = Math.round(h * (maxDim / w)); w = maxDim; }
+          else { w = Math.round(w * (maxDim / h)); h = maxDim; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        resolve(dataUrl.split(',')[1]); // strip data URL prefix
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function showMacroBreakdown(calories, macros) {
+  const el = document.getElementById('macroBreakdown');
+  el.innerHTML = `
+    <div class="macro-title">Estimated breakdown</div>
+    <div class="macro-grid">
+      <div class="macro-item"><div class="macro-label">Protein</div><div class="macro-value">${macros.protein}<span>g</span></div></div>
+      <div class="macro-item"><div class="macro-label">Carbs</div><div class="macro-value">${macros.carbs}<span>g</span></div></div>
+      <div class="macro-item"><div class="macro-label">Fat</div><div class="macro-value">${macros.fat}<span>g</span></div></div>
+    </div>
+  `;
+  el.style.display = 'block';
+}
+
+// ============================================================
+// WEIGHT LOGGING & TREND
+// ============================================================
+function openWeightModal() {
+  const p = db.profile || {};
+  const isImperial = (p.units || 'imperial') === 'imperial';
+  document.getElementById('weightModalLabel').textContent = isImperial ? 'Weight (lbs)' : 'Weight (kg)';
+  document.getElementById('weightDate').value = todayStr();
+
+  // Pre-fill with latest weight if any
+  const latest = getLatestWeight();
+  document.getElementById('weightInput').value = latest ? latest.weight : (p.weight || '');
+
+  renderWeightHistoryInModal();
+  document.getElementById('weightModal').classList.add('open');
+}
+
+function closeWeightModal() {
+  document.getElementById('weightModal').classList.remove('open');
+}
+
+function saveWeight() {
+  const w = parseFloat(document.getElementById('weightInput').value);
+  const date = document.getElementById('weightDate').value;
+  if (isNaN(w) || w <= 0) { toast('Enter a valid weight'); return; }
+  if (!date) { toast('Pick a date'); return; }
+
+  const units = db.profile?.units || 'imperial';
+
+  // If entry exists for this date, update it; else add and sort
+  const existing = db.weights.findIndex(e => e.date === date);
+  if (existing >= 0) {
+    db.weights[existing] = { date, weight: w, units };
+  } else {
+    db.weights.push({ date, weight: w, units });
+  }
+  db.weights.sort((a, b) => a.date.localeCompare(b.date));
+
+  // Sync to profile if this is the most recent
+  const latest = db.weights[db.weights.length - 1];
+  if (latest.date === date) {
+    db.profile = db.profile || {};
+    db.profile.weight = w;
+    // Invalidate AI insights since underlying numbers changed
+    db.profile.aiInsights = null;
+    db.profile.aiInsightsFingerprint = null;
+    // Recompute calGoal
+    const numbers = calcProfileNumbers(db.profile);
+    if (numbers.ready && !db.profile.calGoalOverride) {
+      db.profile.calGoal = numbers.target;
+    }
+  }
+
+  saveDB();
+  renderWeightHistoryInModal();
+  renderHome();
+  toast('Weight logged');
+}
+
+function deleteWeightEntry(date) {
+  db.weights = db.weights.filter(e => e.date !== date);
+  saveDB();
+  renderWeightHistoryInModal();
+  // Re-render history if visible
+  if (document.getElementById('page-history').classList.contains('active')) {
+    renderHistory();
+  }
+}
+
+function getLatestWeight() {
+  if (!db.weights || !db.weights.length) return null;
+  return db.weights[db.weights.length - 1];
+}
+
+function renderWeightHistoryInModal() {
+  const el = document.getElementById('weightHistoryList');
+  if (!db.weights.length) {
+    el.innerHTML = '<div class="empty" style="margin-top:4px">No weight entries yet</div>';
+    return;
+  }
+  const recent = db.weights.slice().reverse().slice(0, 10);
+  const isImperial = (db.profile?.units || 'imperial') === 'imperial';
+  const unit = isImperial ? 'lbs' : 'kg';
+
+  el.innerHTML = `
+    <div class="weight-history-title">Recent entries</div>
+    ${recent.map(e => {
+      const d = new Date(e.date + 'T00:00:00');
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const label = `${months[d.getMonth()]} ${d.getDate()}`;
+      return `
+        <div class="weight-history-row">
+          <span class="weight-date">${label}</span>
+          <span class="weight-val">${e.weight} <span class="weight-unit">${unit}</span></span>
+          <button class="entry-delete" onclick="deleteWeightEntry('${e.date}')">×</button>
+        </div>
+      `;
+    }).join('')}
+  `;
+}
+
+function calcWeightTrend() {
+  if (!db.weights || db.weights.length === 0) return null;
+  const sorted = [...db.weights].sort((a, b) => a.date.localeCompare(b.date));
+  const latest = sorted[sorted.length - 1];
+  const oldest = sorted[0];
+  const isImperial = (db.profile?.units || 'imperial') === 'imperial';
+  const unit = isImperial ? 'lbs' : 'kg';
+
+  function daysAgoEntry(days) {
+    const target = new Date();
+    target.setDate(target.getDate() - days);
+    const targetStr = target.toISOString().slice(0, 10);
+    // Find closest entry on or before targetStr
+    let best = null;
+    for (const e of sorted) {
+      if (e.date <= targetStr) best = e;
+      else break;
+    }
+    return best;
+  }
+
+  const sevenDaysAgo = daysAgoEntry(7);
+  const thirtyDaysAgo = daysAgoEntry(30);
+
+  const change7 = sevenDaysAgo && sevenDaysAgo !== latest
+    ? Math.round((latest.weight - sevenDaysAgo.weight) * 10) / 10
+    : null;
+  const change30 = thirtyDaysAgo && thirtyDaysAgo !== latest
+    ? Math.round((latest.weight - thirtyDaysAgo.weight) * 10) / 10
+    : null;
+
+  // Total span change and weekly average
+  const totalChange = sorted.length > 1
+    ? Math.round((latest.weight - oldest.weight) * 10) / 10
+    : null;
+  const totalDays = sorted.length > 1
+    ? (new Date(latest.date) - new Date(oldest.date)) / (1000 * 60 * 60 * 24)
+    : 0;
+  const weeklyRate = totalDays >= 7
+    ? Math.round((totalChange / totalDays * 7) * 10) / 10
+    : null;
+
+  return {
+    entries: sorted,
+    latest: latest.weight,
+    oldest: oldest.weight,
+    unit,
+    isImperial,
+    change7,
+    change30,
+    totalChange,
+    weeklyRate
+  };
+}
+
+function renderWeightChart() {
+  const trend = calcWeightTrend();
+  const container = document.getElementById('weightChart');
+  const statsBlock = document.getElementById('weightTrendStats');
+  if (!trend || trend.entries.length < 1) {
+    container.innerHTML = '<div class="empty" style="padding: 32px 16px;">Log a weight on the home screen to start tracking your trend.</div>';
+    statsBlock.innerHTML = '';
+    return;
+  }
+
+  if (trend.entries.length === 1) {
+    container.innerHTML = `<div class="empty" style="padding: 32px 16px;">Just one entry so far: ${trend.latest} ${trend.unit}. Add another to see the trend.</div>`;
+    statsBlock.innerHTML = '';
+    return;
+  }
+
+  // Build SVG chart
+  const w = 340, h = 200;
+  const pad = { top: 20, right: 14, bottom: 28, left: 36 };
+  const innerW = w - pad.left - pad.right;
+  const innerH = h - pad.top - pad.bottom;
+
+  const entries = trend.entries;
+  const weights = entries.map(e => e.weight);
+  const minW = Math.min(...weights);
+  const maxW = Math.max(...weights);
+
+  // Include goal weight in y-axis range if set
+  let yMin = minW, yMax = maxW;
+  const goalW = db.profile?.goalWeight;
+  if (goalW) {
+    yMin = Math.min(yMin, goalW);
+    yMax = Math.max(yMax, goalW);
+  }
+  const yPad = Math.max((yMax - yMin) * 0.15, 1);
+  yMin -= yPad;
+  yMax += yPad;
+
+  const dates = entries.map(e => new Date(e.date + 'T00:00:00').getTime());
+  const xMin = dates[0];
+  const xMax = dates[dates.length - 1];
+  const xRange = Math.max(xMax - xMin, 1);
+
+  const xScale = d => pad.left + ((d - xMin) / xRange) * innerW;
+  const yScale = w => pad.top + ((yMax - w) / (yMax - yMin)) * innerH;
+
+  // Build path
+  const path = entries.map((e, i) => {
+    const x = xScale(new Date(e.date + 'T00:00:00').getTime());
+    const y = yScale(e.weight);
+    return `${i === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
+  }).join(' ');
+
+  // Area fill path
+  const areaPath = path
+    + ` L ${xScale(xMax).toFixed(1)} ${(pad.top + innerH).toFixed(1)}`
+    + ` L ${xScale(xMin).toFixed(1)} ${(pad.top + innerH).toFixed(1)} Z`;
+
+  // Goal line
+  let goalLine = '';
+  if (goalW) {
+    const gy = yScale(goalW);
+    goalLine = `
+      <line x1="${pad.left}" y1="${gy.toFixed(1)}" x2="${(pad.left + innerW).toFixed(1)}" y2="${gy.toFixed(1)}"
+            stroke="var(--green)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6" />
+      <text x="${(pad.left + innerW - 4).toFixed(1)}" y="${(gy - 4).toFixed(1)}" text-anchor="end"
+            font-size="10" fill="var(--green)" font-family="Inter Tight, sans-serif" font-weight="500">goal ${goalW}</text>
+    `;
+  }
+
+  // Y-axis labels (3 ticks)
+  const yTicks = [yMin, (yMin + yMax) / 2, yMax];
+  const yLabels = yTicks.map(t => {
+    const y = yScale(t);
+    return `<text x="${pad.left - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end" font-size="9" fill="var(--ink-faint)" font-family="Inter Tight, sans-serif">${Math.round(t * 10) / 10}</text>`;
+  }).join('');
+
+  // X-axis labels (first and last)
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmt = d => { const dt = new Date(d + 'T00:00:00'); return `${months[dt.getMonth()]} ${dt.getDate()}`; };
+  const xLabels = `
+    <text x="${pad.left}" y="${(pad.top + innerH + 16).toFixed(1)}" font-size="9" fill="var(--ink-faint)" font-family="Inter Tight, sans-serif">${fmt(entries[0].date)}</text>
+    <text x="${(pad.left + innerW).toFixed(1)}" y="${(pad.top + innerH + 16).toFixed(1)}" text-anchor="end" font-size="9" fill="var(--ink-faint)" font-family="Inter Tight, sans-serif">${fmt(entries[entries.length - 1].date)}</text>
+  `;
+
+  // Data points
+  const dots = entries.map(e => {
+    const x = xScale(new Date(e.date + 'T00:00:00').getTime());
+    const y = yScale(e.weight);
+    return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="var(--paper)" stroke="var(--accent)" stroke-width="2" />`;
+  }).join('');
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+      <defs>
+        <linearGradient id="weightAreaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.18" />
+          <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      ${yLabels}
+      ${xLabels}
+      ${goalLine}
+      <path d="${areaPath}" fill="url(#weightAreaGrad)" />
+      <path d="${path}" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+      ${dots}
+    </svg>
+  `;
+
+  // Stats block
+  const fmtChange = c => c == null ? '—' : (c > 0 ? `+${c}` : `${c}`);
+  const fmtRate = r => r == null ? '—' : (r > 0 ? `+${r}` : `${r}`);
+  statsBlock.innerHTML = `
+    <div class="trend-stat">
+      <div class="trend-label">Current</div>
+      <div class="trend-value">${trend.latest}<span class="trend-unit"> ${trend.unit}</span></div>
+    </div>
+    <div class="trend-stat">
+      <div class="trend-label">7-day</div>
+      <div class="trend-value ${trend.change7 != null ? (trend.change7 < 0 ? 'down' : trend.change7 > 0 ? 'up' : '') : ''}">${fmtChange(trend.change7)}<span class="trend-unit"> ${trend.change7 != null ? trend.unit : ''}</span></div>
+    </div>
+    <div class="trend-stat">
+      <div class="trend-label">30-day</div>
+      <div class="trend-value ${trend.change30 != null ? (trend.change30 < 0 ? 'down' : trend.change30 > 0 ? 'up' : '') : ''}">${fmtChange(trend.change30)}<span class="trend-unit"> ${trend.change30 != null ? trend.unit : ''}</span></div>
+    </div>
+    <div class="trend-stat">
+      <div class="trend-label">Avg/week</div>
+      <div class="trend-value ${trend.weeklyRate != null ? (trend.weeklyRate < 0 ? 'down' : trend.weeklyRate > 0 ? 'up' : '') : ''}">${fmtRate(trend.weeklyRate)}<span class="trend-unit"> ${trend.weeklyRate != null ? trend.unit : ''}</span></div>
+    </div>
+  `;
 }
 
 // ============================================================
@@ -2132,6 +2788,7 @@ function renderApiUsageUI() {
 // HISTORY
 // ============================================================
 function renderHistory() {
+  renderWeightChart();
   // Calculate this month's averages from closed days
   const now = new Date();
   const ym = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
@@ -3047,6 +3704,9 @@ function renderAll() {
 // Close modal when tapping outside
 document.getElementById('modal').addEventListener('click', e => {
   if (e.target.id === 'modal') closeModal();
+});
+document.getElementById('weightModal').addEventListener('click', e => {
+  if (e.target.id === 'weightModal') closeWeightModal();
 });
 
 // Re-check rollover when the app comes back to foreground

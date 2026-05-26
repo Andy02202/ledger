@@ -279,9 +279,203 @@
     gap: 8px;
   }
 
+  .ai-button-row.three {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+
+  .ai-button-row.three .btn-ai {
+    padding: 12px 6px;
+    font-size: 13px;
+  }
+
   .btn-ai.photo {
     background: var(--ink);
     width: auto;
+  }
+
+  .btn-ai.scan {
+    background: var(--green);
+    width: auto;
+  }
+
+  /* Servings field */
+  .servings-row {
+    display: flex;
+    gap: 6px;
+    align-items: stretch;
+  }
+
+  .serving-btn {
+    background: var(--paper-deep);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0 14px;
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    color: var(--ink);
+    cursor: pointer;
+    font-style: italic;
+    min-width: 44px;
+  }
+
+  .serving-btn:active {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+  }
+
+  .servings-row .field-input {
+    flex: 1;
+  }
+
+  .servings-info {
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-top: 6px;
+    line-height: 1.4;
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+  }
+
+  /* Scanner modal */
+  .scanner-modal {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 300;
+    display: none;
+    flex-direction: column;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .scanner-modal.open { display: flex; }
+
+  .scanner-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    color: var(--paper);
+    position: relative;
+  }
+
+  .scanner-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+  }
+
+  .scanner-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    font-weight: 400;
+  }
+
+  .scanner-close {
+    background: rgba(255,255,255,0.12);
+    border: none;
+    color: var(--paper);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .scanner-camera {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #111;
+  }
+
+  #scannerVideo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .scanner-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 320px;
+    aspect-ratio: 2 / 1;
+    border: 2px solid var(--paper);
+    border-radius: 14px;
+    box-shadow: 0 0 0 9999px rgba(0,0,0,0.45);
+    pointer-events: none;
+  }
+
+  .scanner-frame::before, .scanner-frame::after,
+  .scanner-frame > i {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: var(--accent-soft);
+    border-style: solid;
+  }
+  .scanner-frame::before { top: -2px; left: -2px; border-width: 3px 0 0 3px; border-radius: 14px 0 0 0; }
+  .scanner-frame::after { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-radius: 0 14px 0 0; }
+
+  .scanner-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: var(--paper);
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .scanner-footer {
+    display: flex;
+    gap: 10px;
+    padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
+    background: #000;
+  }
+
+  .scanner-footer .btn {
+    flex: 1;
+  }
+
+  .scanner-loading {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--paper);
+    font-size: 14px;
+    z-index: 10;
+  }
+
+  .spinner-lg {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(245, 239, 228, 0.2);
+    border-top-color: var(--paper);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
   }
 
   /* Macros breakdown */
@@ -1787,20 +1981,34 @@
     </div>
 
     <div class="ai-help" id="aiHelp">
-      <strong>Tip:</strong> Don't know the calories? Describe it and tap <strong>Estimate</strong>, or snap a <strong>photo</strong> of your meal.
+      <strong>Tip:</strong> Type it in, snap a meal photo, or scan a package barcode/label.
     </div>
 
-    <div class="ai-button-row">
+    <div class="ai-button-row three">
       <button class="btn btn-ai" id="aiBtn" onclick="estimateWithAI()">
-        <span id="aiBtnText">Estimate from text</span>
+        <span id="aiBtnText">Text</span>
       </button>
       <button class="btn btn-ai photo" id="photoBtn" onclick="document.getElementById('photoInput').click()">
-        <span id="photoBtnText">📷 From photo</span>
+        <span id="photoBtnText">📷 Meal</span>
+      </button>
+      <button class="btn btn-ai scan" id="scanBtn" onclick="openScanner()">
+        <span id="scanBtnText">⌗ Package</span>
       </button>
     </div>
 
     <div id="lastCallCost" class="last-call-cost" style="display:none"></div>
     <div id="macroBreakdown" class="macro-breakdown" style="display:none"></div>
+
+    <div id="servingsField" class="field" style="display:none; margin-top: 16px;">
+      <label class="field-label">Servings consumed</label>
+      <div class="servings-row">
+        <button type="button" class="serving-btn" onclick="setServings(0.5)">½</button>
+        <button type="button" class="serving-btn" onclick="setServings(1)">1</button>
+        <button type="button" class="serving-btn" onclick="setServings(2)">2</button>
+        <input class="field-input" id="entryServings" type="number" step="0.1" min="0.1" value="1" inputmode="decimal" oninput="updateFromServings()" />
+      </div>
+      <div class="servings-info" id="servingsInfo"></div>
+    </div>
 
     <div class="field" style="margin-top: 16px;">
       <label class="field-label" id="calLabel">Calories</label>
@@ -1847,12 +2055,39 @@
 
 <!-- Hidden photo input for meal photos -->
 <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none" onchange="onPhotoSelected(event)" />
+<input type="file" id="labelInput" accept="image/*" capture="environment" style="display:none" onchange="onLabelSelected(event)" />
+
+<!-- Scanner modal -->
+<div class="scanner-modal" id="scannerModal">
+  <div class="scanner-content">
+    <div class="scanner-header">
+      <div class="scanner-title">Scan package</div>
+      <button class="scanner-close" onclick="closeScanner()">✕</button>
+    </div>
+
+    <div class="scanner-camera">
+      <video id="scannerVideo" autoplay playsinline muted></video>
+      <div class="scanner-frame"></div>
+      <div class="scanner-hint" id="scannerHint">Point at a barcode to scan</div>
+    </div>
+
+    <div class="scanner-footer">
+      <button class="btn btn-secondary" onclick="closeScanner()">Cancel</button>
+      <button class="btn btn-primary" onclick="switchToLabelScan()">📷 Scan label instead</button>
+    </div>
+
+    <div class="scanner-loading" id="scannerLoading" style="display:none">
+      <div class="spinner-lg"></div>
+      <div id="scannerLoadingText">Looking up product...</div>
+    </div>
+  </div>
+</div>
 
 <script>
 // ============================================================
 // APP VERSION
 // ============================================================
-const APP_VERSION = '1.5.0';
+const APP_VERSION = '1.6.0';
 
 // ============================================================
 // STORAGE
@@ -2051,6 +2286,9 @@ function openModal(mode) {
   document.getElementById('entryDuration').value = '';
   document.getElementById('lastCallCost').style.display = 'none';
   document.getElementById('macroBreakdown').style.display = 'none';
+  document.getElementById('servingsField').style.display = 'none';
+  document.getElementById('entryServings').value = 1;
+  scannedBase = null;
   lastMacros = null;
 
   if (mode === 'meal') {
@@ -2061,7 +2299,9 @@ function openModal(mode) {
     document.getElementById('calLabel').textContent = 'Calories consumed';
     document.getElementById('durationField').style.display = 'none';
     document.getElementById('photoBtn').style.display = 'flex';
-    document.getElementById('aiBtnText').textContent = 'Estimate from text';
+    document.getElementById('scanBtn').style.display = 'flex';
+    document.getElementById('aiBtnText').textContent = 'Text';
+    document.querySelector('.ai-button-row').classList.add('three');
   } else {
     document.getElementById('modalTitle').textContent = 'Log a workout';
     document.getElementById('modalSubtitle').textContent = 'Activity';
@@ -2070,7 +2310,9 @@ function openModal(mode) {
     document.getElementById('calLabel').textContent = 'Calories burned';
     document.getElementById('durationField').style.display = 'block';
     document.getElementById('photoBtn').style.display = 'none';
+    document.getElementById('scanBtn').style.display = 'none';
     document.getElementById('aiBtnText').textContent = 'Estimate with AI';
+    document.querySelector('.ai-button-row').classList.remove('three');
   }
 
   document.getElementById('modal').classList.add('open');
@@ -2210,7 +2452,7 @@ async function estimateWithAI() {
     console.error(e);
   } finally {
     btn.disabled = false;
-    btnText.textContent = modalMode === 'meal' ? 'Estimate from text' : 'Estimate with AI';
+    btnText.textContent = modalMode === 'meal' ? 'Text' : 'Estimate with AI';
   }
 }
 
@@ -2362,6 +2604,322 @@ function showMacroBreakdown(calories, macros) {
     </div>
   `;
   el.style.display = 'block';
+}
+
+// ============================================================
+// PACKAGE SCANNER (barcode + nutrition label fallback)
+// ============================================================
+let scannerStream = null;
+let scannerDetector = null;
+let scannerActive = false;
+let scannerRafId = null;
+let lastBarcodeAttempted = null;
+
+// Per-serving values from the scan, used to recompute totals when servings change
+let scannedBase = null; // { name, calPerServing, proteinPerServing, carbsPerServing, fatPerServing, servingDescription, brand }
+
+async function openScanner() {
+  const modal = document.getElementById('scannerModal');
+  modal.classList.add('open');
+  document.getElementById('scannerHint').textContent = 'Point at a barcode to scan';
+  document.getElementById('scannerLoading').style.display = 'none';
+  lastBarcodeAttempted = null;
+
+  // Check for BarcodeDetector availability
+  const hasBarcodeDetector = 'BarcodeDetector' in window;
+
+  try {
+    scannerStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: { ideal: 'environment' },
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      }
+    });
+  } catch (e) {
+    toast('Camera access denied');
+    closeScanner();
+    return;
+  }
+
+  const video = document.getElementById('scannerVideo');
+  video.srcObject = scannerStream;
+  await video.play().catch(() => {});
+
+  if (hasBarcodeDetector) {
+    try {
+      scannerDetector = new BarcodeDetector({
+        formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'code_39']
+      });
+      scannerActive = true;
+      scanLoop();
+    } catch (e) {
+      document.getElementById('scannerHint').textContent = 'Barcode detection unavailable — tap "Scan label" instead';
+    }
+  } else {
+    document.getElementById('scannerHint').textContent = 'Barcode detection unavailable on this device — tap "Scan label" instead';
+  }
+}
+
+async function scanLoop() {
+  if (!scannerActive) return;
+  const video = document.getElementById('scannerVideo');
+  if (video.readyState === 4) {
+    try {
+      const codes = await scannerDetector.detect(video);
+      if (codes.length > 0) {
+        const code = codes[0].rawValue;
+        // Avoid hammering on a barcode that already failed lookup
+        if (code !== lastBarcodeAttempted) {
+          lastBarcodeAttempted = code;
+          scannerActive = false;
+          await handleBarcodeFound(code);
+          return;
+        }
+      }
+    } catch (e) { /* ignore individual frame errors */ }
+  }
+  scannerRafId = requestAnimationFrame(scanLoop);
+}
+
+async function handleBarcodeFound(code) {
+  // Haptic feedback if available
+  if (navigator.vibrate) navigator.vibrate(60);
+
+  document.getElementById('scannerLoading').style.display = 'flex';
+  document.getElementById('scannerLoadingText').textContent = `Looking up ${code}...`;
+
+  try {
+    const product = await lookupOpenFoodFacts(code);
+    if (product) {
+      applyScannedProduct(product);
+      closeScanner();
+      toast(`Found: ${product.name}`);
+    } else {
+      // Not found — offer label scan fallback
+      document.getElementById('scannerLoading').style.display = 'none';
+      document.getElementById('scannerHint').textContent = `Not in database. Tap "Scan label" below ↓`;
+      // Resume scanning for a different barcode
+      scannerActive = true;
+      scanLoop();
+    }
+  } catch (e) {
+    document.getElementById('scannerLoading').style.display = 'none';
+    document.getElementById('scannerHint').textContent = 'Lookup failed — check connection';
+    scannerActive = true;
+    scanLoop();
+  }
+}
+
+async function lookupOpenFoodFacts(barcode) {
+  const url = `https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(barcode)}.json?fields=product_name,brands,nutriments,serving_size,serving_quantity,product_quantity`;
+  // Note: Browser fetch doesn't allow custom User-Agent headers, but OFF allows
+  // unauthenticated reads. We use a query param convention to identify the app instead.
+  const res = await fetch(url + '&app_name=Ledger&app_version=' + APP_VERSION);
+  if (!res.ok) throw new Error('Network error');
+  const data = await res.json();
+
+  if (data.status !== 1 || !data.product) return null;
+
+  const p = data.product;
+  const n = p.nutriments || {};
+
+  // Open Food Facts gives both per-100g and (sometimes) per-serving values
+  // Prefer per-serving when available, otherwise compute from per-100g × serving_quantity
+  let calPerServing = null;
+  let proteinPerServing = null;
+  let carbsPerServing = null;
+  let fatPerServing = null;
+  let servingDescription = p.serving_size || null;
+
+  if (n['energy-kcal_serving']) {
+    calPerServing = n['energy-kcal_serving'];
+    proteinPerServing = n.proteins_serving;
+    carbsPerServing = n.carbohydrates_serving;
+    fatPerServing = n.fat_serving;
+  } else if (n['energy-kcal_100g'] && p.serving_quantity) {
+    const sq = parseFloat(p.serving_quantity);
+    if (!isNaN(sq) && sq > 0) {
+      calPerServing = n['energy-kcal_100g'] * sq / 100;
+      proteinPerServing = n.proteins_100g ? n.proteins_100g * sq / 100 : null;
+      carbsPerServing = n.carbohydrates_100g ? n.carbohydrates_100g * sq / 100 : null;
+      fatPerServing = n.fat_100g ? n.fat_100g * sq / 100 : null;
+    }
+  } else if (n['energy-kcal_100g']) {
+    // Last resort — treat as per-100g
+    calPerServing = n['energy-kcal_100g'];
+    proteinPerServing = n.proteins_100g || null;
+    carbsPerServing = n.carbohydrates_100g || null;
+    fatPerServing = n.fat_100g || null;
+    servingDescription = '100g';
+  }
+
+  if (calPerServing == null) return null;
+
+  let name = p.product_name || 'Unknown product';
+  if (p.brands) name = `${p.brands} — ${name}`;
+
+  return {
+    name: name.trim().slice(0, 80),
+    brand: p.brands || '',
+    calPerServing: Math.round(calPerServing),
+    proteinPerServing: proteinPerServing != null ? Math.round(proteinPerServing * 10) / 10 : null,
+    carbsPerServing: carbsPerServing != null ? Math.round(carbsPerServing * 10) / 10 : null,
+    fatPerServing: fatPerServing != null ? Math.round(fatPerServing * 10) / 10 : null,
+    servingDescription,
+    source: 'barcode'
+  };
+}
+
+function applyScannedProduct(product) {
+  scannedBase = product;
+  document.getElementById('entryDesc').value = product.name;
+  document.getElementById('entryServings').value = 1;
+  document.getElementById('servingsField').style.display = 'block';
+  document.getElementById('servingsInfo').textContent = product.servingDescription
+    ? `Per serving (${product.servingDescription}): ${product.calPerServing} kcal`
+    : `Per serving: ${product.calPerServing} kcal`;
+  updateFromServings();
+  lastAiUsed = false;  // Barcode lookup is not AI
+  lastFromPhoto = false;
+}
+
+function setServings(n) {
+  document.getElementById('entryServings').value = n;
+  updateFromServings();
+}
+
+function updateFromServings() {
+  if (!scannedBase) return;
+  const s = parseFloat(document.getElementById('entryServings').value) || 1;
+  const cal = Math.round(scannedBase.calPerServing * s);
+  document.getElementById('entryCal').value = cal;
+
+  const hasMacros = scannedBase.proteinPerServing != null
+    || scannedBase.carbsPerServing != null
+    || scannedBase.fatPerServing != null;
+
+  if (hasMacros) {
+    lastMacros = {
+      protein: Math.round((scannedBase.proteinPerServing || 0) * s),
+      carbs: Math.round((scannedBase.carbsPerServing || 0) * s),
+      fat: Math.round((scannedBase.fatPerServing || 0) * s)
+    };
+    showMacroBreakdown(cal, lastMacros);
+  }
+}
+
+function switchToLabelScan() {
+  closeScanner();
+  document.getElementById('labelInput').click();
+}
+
+function closeScanner() {
+  scannerActive = false;
+  if (scannerRafId) cancelAnimationFrame(scannerRafId);
+  scannerRafId = null;
+  if (scannerStream) {
+    scannerStream.getTracks().forEach(t => t.stop());
+    scannerStream = null;
+  }
+  document.getElementById('scannerModal').classList.remove('open');
+}
+
+async function onLabelSelected(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (!db.apiKey) {
+    toast('Add your API key in Setup first');
+    switchPage('setup');
+    closeModal();
+    return;
+  }
+
+  const scanBtn = document.getElementById('scanBtn');
+  const scanBtnText = document.getElementById('scanBtnText');
+  scanBtn.disabled = true;
+  scanBtnText.innerHTML = '<span class="spinner"></span> Reading...';
+
+  try {
+    const base64 = await downscaleAndEncodeImage(file);
+    const prompt = `This is a photo of a nutrition facts label on a food package. Extract the per-serving values exactly as printed. If the label shows "per container" alongside "per serving", use the per-serving values. Respond with ONLY a JSON object (no markdown, no code blocks, no explanation):
+
+{"name": "best guess at product name or null", "servingDescription": "e.g. '1 bottle (12 fl oz)' or '30g (1 scoop)'", "calPerServing": 240, "proteinPerServing": 20, "carbsPerServing": 28, "fatPerServing": 7}
+
+If a macro value isn't clearly visible, use null for that field. calPerServing must be an integer.`;
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': db.apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 300,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: base64 } },
+            { type: 'text', text: prompt }
+          ]
+        }]
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error?.message || `HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    const text = data.content?.[0]?.text || '';
+    const cleaned = text.replace(/```json|```/g, '').trim();
+    let parsed;
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch (e) {
+      const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+      if (jsonMatch) parsed = JSON.parse(jsonMatch[0]);
+      else throw new Error('Could not parse label');
+    }
+
+    if (typeof parsed.calPerServing !== 'number') {
+      throw new Error('Could not find calorie info on label');
+    }
+
+    const product = {
+      name: parsed.name || 'Scanned package',
+      brand: '',
+      calPerServing: Math.round(parsed.calPerServing),
+      proteinPerServing: parsed.proteinPerServing != null ? Math.round(parsed.proteinPerServing * 10) / 10 : null,
+      carbsPerServing: parsed.carbsPerServing != null ? Math.round(parsed.carbsPerServing * 10) / 10 : null,
+      fatPerServing: parsed.fatPerServing != null ? Math.round(parsed.fatPerServing * 10) / 10 : null,
+      servingDescription: parsed.servingDescription || null,
+      source: 'label'
+    };
+
+    applyScannedProduct(product);
+    lastAiUsed = true;
+    lastFromPhoto = true;
+
+    // Record cost
+    const usage = data.usage || {};
+    const cost = recordApiUsage(usage.input_tokens || 0, usage.output_tokens || 0);
+    showLastCallCost(usage.input_tokens || 0, usage.output_tokens || 0, cost);
+
+    toast(`Label read · ${formatCost(cost)}`);
+  } catch (e) {
+    toast('Label read failed: ' + (e.message || 'unknown error'));
+    console.error(e);
+  } finally {
+    scanBtn.disabled = false;
+    scanBtnText.textContent = '⌗ Package';
+    event.target.value = '';
+  }
 }
 
 // ============================================================
